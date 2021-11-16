@@ -6,15 +6,22 @@ def appendSpaces(base, targetLength):
 
 class Table:
   spacing = []
-  def __init__(self, spacing):
+  allowOverflow = False
+  def __init__(self, spacing, allowOverflow = False):
     self.spacing = spacing
+    self.allowOverflow = False
 
   def printRow(self, items):
     for index, item in enumerate(items):
-      print(f"{appendSpaces(item, self.spacing[index])}", end="")
+      toPrint = appendSpaces(item, self.spacing[index])
+      if(not self.allowOverflow):
+        toPrint = toPrint[0:self.spacing[index]]
+      print(f"{toPrint}", end=" ")
     print()
 
 #Exmaple:
 table = Table([15, 12, 5, 5, 5]);
 table.printRow(["Test", "val", "x", "y", "z"]);
-table.printRow(["Column 1", "a value", 6, 3.6, "zzzz"]);
+table.printRow(["Column 1", "a value", 6, 3.601, "z1z1"]);
+table.printRow(["Clmn 2", "another value", "06", 3.6, "z"]);
+table.printRow(["Col 3", "yet another value", 7.3333, 3, "zZz"]);
